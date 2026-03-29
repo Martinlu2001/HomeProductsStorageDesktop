@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="bd de fabricio">
+    <meta name="author" content="fabricio">
+
+    <title>Inventario de productos</title>
+
+    <!-- Custom fonts for this template -->
+    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this page -->
+    <link href="assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column min-vh-100">
+
+            <!-- Main Content -->
+            <div id="content">
+
+
+                <br>
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <h1 class="h3 mb-2 text-gray-800">Inventario de productos</h1>
+
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <button value="ok" class="btn btn-primary btn-rounded"
+                                style="float: right; margin-left: 10px;" type="button" data-toggle="modal"
+                                data-target="#createProduct" aria-hidden="true">
+                                <i class="fa fa-plus" aria-hidden="true"></i>
+                                Nuevo producto
+                            </button>
+
+                            <h6 class="m-0 font-weight-bold text-primary"></h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha vencimiento</th>
+                                            <th>Producto</th>
+                                            <th>Cantidad</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Fecha vencimiento</th>
+                                            <th>Producto</th>
+                                            <th>Cantidad</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody id="product-table">
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; faix <span id="currentDate"></span></span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- MODAL AGREGAR PRODUCTO-->
+    <div class="modal" id="createProduct" tabindex="-1" aria-labelledby="dataDispSecLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+
+            <!-- content modal -->
+            <div class="modal-content">
+
+                <!-- header modal -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="dataUpdateLabel">Registrar nuevo producto</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+
+                <!-- body ventana modal-->
+                <div class="modal-body">
+                    <form id="addProduct" method="post">
+                        <input type="hidden" name="action" value="create">
+                        <!-- Form Row -->
+                        <div class="row gx-3 mb-3">
+                            <!-- Form Group (DNI)-->
+                            <div class="col-md-4">
+                                <label class="small mb-1" for="inputDateExpiry">Fecha vencimiento</label>
+                                <input class="form-control" name="dateExpiry" id="dateExpiry" type="date" required>
+                            </div>
+                            <!-- Form Group (Nombre)-->
+                            <div class="col-md-4 ">
+                                <label class="small mb-1" for="inputName">Producto</label>
+                                <input class="form-control" name="nameProduct" id="nameProduct" type="text" required>
+                            </div>
+                            <div class="col-md-4 ">
+                                <label class="small mb-1" for="inputAmount">
+                                    Cantidad</label>
+                                <input class="form-control" name="amountProduct" id="amountProduct" type="text"
+                                    required>
+                            </div>
+                        </div>
+                        <!-- footer modal -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar
+                            </button>
+                            <button type="submit" class="btn btn-primary" id="add-Product">Agregar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ACTUALIZAR PRODUCTO -->
+    <div class="modal" id="dataProductUpdate" tabindex="-1" aria-labelledby="dataDispSecLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <!-- header modal -->
+                <div class="modal-header">
+                    <h5 class="modal-title">Informacion del producto </h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <!-- body ventana modal -->
+                <div class="modal-body">
+                    <form id="updateProduct" method="post">
+                        <input type="hidden" name="action" value="update">
+                        <input type="hidden" name="idProduct" id="idProductUpdate">
+                        <div class="row gx-3 mb-3">
+                            <div class="col-md-4">
+                                <label class="small mb-1">producto</label>
+                                <input class="form-control" name="nameProduct" id="nameProductUpdate" type="text">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="small mb-1">cantidad</label>
+                                <input class="form-control" name="amountProduct" id="amountProductUpdate" type="text">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="small mb-1">Fecha vencimiento</label>
+                                <input class="form-control" name="dateExpiry" id="dateExpiryUpdate" type="date">
+                            </div>
+                        </div>
+                        <!-- footer modal -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary">Actualizar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <script>
+        const year = new Date().getFullYear();
+        document.getElementById("currentDate").textContent = year;
+    </script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="assets/vendor/jquery-easing/jquery.easing.min.js"></script> -->
+    <script src="assets/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+    <script src="assets/js/sb-admin-2.min.js"></script>
+    <!-- <script src="assets/js/demo/datatables-demo.js"></script> -->
+    <script type="module" src="/src/renderer.js"></script>
+    <script>
+        if (typeof module === 'object') {
+            window.jQuery = window.$ = module.exports;
+        }
+    </script>
+
+</body>
+
+</html>
