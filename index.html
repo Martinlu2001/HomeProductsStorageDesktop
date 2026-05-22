@@ -42,7 +42,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Inventario de productos</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Inventario de productos de casa</h1>
 
 
                     <!-- DataTales Example -->
@@ -65,6 +65,7 @@
                                             <th>Fecha vencimiento</th>
                                             <th>Producto</th>
                                             <th>Cantidad</th>
+                                            <th>Estado</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </thead>
@@ -73,6 +74,7 @@
                                             <th>Fecha vencimiento</th>
                                             <th>Producto</th>
                                             <th>Cantidad</th>
+                                            <th>Estado</th>
                                             <th>Acciones</th>
                                         </tr>
                                     </tfoot>
@@ -172,18 +174,26 @@
                         <input type="hidden" name="action" value="update">
                         <input type="hidden" name="idProduct" id="idProductUpdate">
                         <div class="row gx-3 mb-3">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="small mb-1">producto</label>
                                 <input class="form-control" name="nameProduct" id="nameProductUpdate" type="text">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <label class="small mb-1">cantidad</label>
                                 <input class="form-control" name="amountProduct" id="amountProductUpdate" type="text">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
+                                <label class="small mb-1">Estado</label>
+                                <select class="form-control" name="estadoProduct" id="estadoProductUpdate">
+                                    <option value="cerrado">Cerrado</option>
+                                    <option value="abierto">Abierto</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
                                 <label class="small mb-1">Fecha vencimiento</label>
                                 <input class="form-control" name="dateExpiry" id="dateExpiryUpdate" type="date">
                             </div>
+                            
                         </div>
                         <!-- footer modal -->
                         <div class="modal-footer">

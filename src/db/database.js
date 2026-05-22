@@ -20,18 +20,27 @@ class AppDatabase{
             cantProduct TEXT NOT NULL,
             fechaVencProduct TEXT NOT NULL
             )`)
+
+            const columns = this.db.pragma("table_info(products)");
+            const exists = columns.some(col => col.name === 'estadoProduct');
+            
+            if (!exists) {
+                this.db.exec(`ALTER TABLE products ADD COLUMN estadoProduct TEXT NOT NULL DEFAULT 'cerrado'`);
+                console.log("columna estadoProduct agregada");
+            }
             console.log("db inicio")
     }
 
     //agregar producto
-    addProduct(nameProduct, cantProduct, fechaVencProduct){
-        const stmt = this.db.prepare('INSERT INTO products (nameProduct, cantProduct, fechaVencProduct) VALUES (?, ?, ?)');
-        const info = stmt.run(nameProduct, cantProduct, fechaVencProduct);
+    addProduct(nameProduct, cantProduct, fechaVencProduct, estadoProduct = 'cerrado'){
+        const stmt = this.db.prepare('INSERT INTO products (nameProduct, cantProduct, fechaVencProduct, estadoProduct) VALUES (?, ?, ?, ?)');
+        const info = stmt.run(nameProduct, cantProduct, fechaVencProduct, estadoProduct);
         return{
             idProduct: info.lastInsertRowid,
             nameProduct: nameProduct,
             cantProduct: cantProduct,
-            fechaVencProduct: fechaVencProduct
+            fechaVencProduct: fechaVencProduct,
+            estadoProduct: estadoProduct
         }
     }
 
@@ -43,9 +52,9 @@ class AppDatabase{
     }
 
     //actualizar producto
-    updateProduct(idProduct, nameProduct, cantProduct, fechaVencProduct){
-        const stmt = this.db.prepare('UPDATE products SET nameProduct = ?, cantProduct = ?, fechaVencProduct = ?  WHERE idProduct = ?');
-        const info = stmt.run(nameProduct, cantProduct, fechaVencProduct, idProduct);
+    updateProduct(idProduct, nameProduct, cantProduct, fechaVencProduct, estadoProduct){
+        const stmt = this.db.prepare('UPDATE products SET nameProduct = ?, cantProduct = ?, fechaVencProduct = ?, estadoProduct = ?  WHERE idProduct = ?');
+        const info = stmt.run(nameProduct, cantProduct, fechaVencProduct, estadoProduct, idProduct);
         return info.changes > 0;
     }
 

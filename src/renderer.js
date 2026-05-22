@@ -18,6 +18,7 @@ $(document).ready(async function () {
             { data: 'fechaVencProduct' },
             { data: 'nameProduct' },
             { data: 'cantProduct' },
+            { data: 'estadoProduct' },
             {
                 data: null,
                 render: function (data) {
@@ -26,7 +27,8 @@ $(document).ready(async function () {
                             data-id="${data.idProduct}"
                             data-name="${data.nameProduct}"
                             data-cant="${data.cantProduct}"
-                            data-fecha="${data.fechaVencProduct}">
+                            data-fecha="${data.fechaVencProduct}"
+                            data-estado="${data.estadoProduct}">
                             <i class="fa fa-edit"></i>
                         </button>
                         <button class="btn btn-danger btn-sm delete-btn"
@@ -88,6 +90,7 @@ document.addEventListener("click", (e) => {
         document.getElementById("nameProductUpdate").value = btn.dataset.name;
         document.getElementById("amountProductUpdate").value = btn.dataset.cant;
         document.getElementById("dateExpiryUpdate").value = btn.dataset.fecha;
+        document.getElementById("estadoProductUpdate").value = btn.dataset.estado;
         $('#dataProductUpdate').modal('show');
     }
 });
@@ -100,12 +103,13 @@ formUpdateProduct.addEventListener("submit", async (e) => {
         idProduct: document.getElementById("idProductUpdate").value,
         nameProduct: document.getElementById("nameProductUpdate").value,
         cantProduct: document.getElementById("amountProductUpdate").value,
-        fechaVencProduct: document.getElementById("dateExpiryUpdate").value
+        fechaVencProduct: document.getElementById("dateExpiryUpdate").value, 
+        estadoProduct: document.getElementById("estadoProductUpdate").value
     };
 
     try {
         await window.api.updateProduct(product.idProduct, product.nameProduct,
-                                       product.cantProduct, product.fechaVencProduct);
+                                       product.cantProduct, product.fechaVencProduct, product.estadoProduct);
 
         await Swal.fire({
             icon: "success",
